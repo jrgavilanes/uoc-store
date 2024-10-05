@@ -28,3 +28,12 @@ sail composer require livewire/livewire
 sail composer require wireui/wireui
 sail composer require barryvdh/laravel-debugbar --dev
 ```
+
+taildwind
+```sh
+# ... revisa configuración app.css, etc en la web
+# https://tailwindcss.com/docs/guides/laravel
+sail npm install -D tailwindcss postcss autoprefixer
+sail npx tailwindcss init -p
+
+```
