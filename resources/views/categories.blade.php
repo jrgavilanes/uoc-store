@@ -23,23 +23,30 @@
         </ul>
     </nav>
     <div class="text-red-200 mt-4 border border-red-400 min-w-[400px] min-h-[400px] p-2">
-        <p>Home</p>
+        <p>Category</p>
         <section class="flex flex-col items-center justify-center space-y-4 my-8">
-            <div class="flex justify-between items-center gap-4">
-                <img src="https://via.placeholder.com/50x50/ff0000/ffffff
-                " alt="">
-                <p>category 1</p>
-            </div>
-            <div class="flex justify-between items-center gap-4">
-                <img src="https://via.placeholder.com/50x50/ff0000/ffffff
-                " alt="">
-                <p>category 2</p>
-            </div>
-            <div class="flex justify-between items-center gap-4">
-                <img src="https://via.placeholder.com/50x50/ff0000/ffffff
-                " alt="">
-                <p>category 3</p>
-            </div>
+            <a href="/products/1">
+                <div class="flex justify-between items-center gap-4">
+                    <img src="https://via.placeholder.com/50x50/ff0000/ffffff
+                    " alt="">
+                    <p>Product 1</p>
+                </div>
+            </a>
+
+            <a href="/products/2">
+                <div class="flex justify-between items-center gap-4">
+                    <img src="https://via.placeholder.com/50x50/ff0000/ffffff
+                    " alt="">
+                    <p>Product 2</p>
+                </div>
+            </a>
+            <a href="/products/3">
+                <div class="flex justify-between items-center gap-4">
+                    <img src="https://via.placeholder.com/50x50/ff0000/ffffff
+                    " alt="">
+                    <p>Product 3</p>
+                </div>
+            </a>
         </section>
     </div>
 @endsection

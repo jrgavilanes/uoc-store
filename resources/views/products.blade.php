@@ -22,24 +22,21 @@
             </li>
         </ul>
     </nav>
-    <div class="text-red-200 mt-4 border border-red-400 min-w-[400px] min-h-[400px] p-2">
-        <p>Home</p>
+    <div class="text-red-200 mt-4 border border-red-400 w-[400px] min-h-[400px] p-2">
+        <p>Product {{ $id }}</p>
         <section class="flex flex-col items-center justify-center space-y-4 my-8">
-            <div class="flex justify-between items-center gap-4">
-                <img src="https://via.placeholder.com/50x50/ff0000/ffffff
-                " alt="">
-                <p>category 1</p>
+            <div class="flex gap-4">
+                <img src="https://via.placeholder.com/100/ff0000/ffffff
+                    " alt="">
+                <div class="flex flex-col">
+                    <p>Product {{ $id }}</p>
+                    <p class="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure error
+                        exercitationem excepturi eum quidem eveniet, repellat vel modi dolor sit a laboriosam sint
+                        laudantium odit iste amet? Est, sit quasi?</p>
+                </div>
             </div>
-            <div class="flex justify-between items-center gap-4">
-                <img src="https://via.placeholder.com/50x50/ff0000/ffffff
-                " alt="">
-                <p>category 2</p>
-            </div>
-            <div class="flex justify-between items-center gap-4">
-                <img src="https://via.placeholder.com/50x50/ff0000/ffffff
-                " alt="">
-                <p>category 3</p>
-            </div>
+            <button class="text-white bg-slate-700/50 px-2 py-2 w-full rounded-xl hover:bg-slate-700">Add to Cart</button>
         </section>
     </div>
+
 @endsection
