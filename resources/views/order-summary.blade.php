@@ -53,16 +53,15 @@
 
     <button x-data
         @click="Swal.fire({
-        title: '¡Éxito!',
-        text: 'mooolaaaaa',
-        icon: 'success',
-        confirmButtonText: 'Aceptar'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Redirige a la ruta 'home' si se confirma
-            window.location.href = '{{ route('home') }}';
-        }
-    })"
+            title: 'Checkout confirmed',
+            text: 'Check your email for the order details',
+            icon: 'success',
+            confirmButtonText: 'Ok'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '{{ route('home') }}';
+            }
+        })"
         class="flex flex-col  text-white items-center justify-center bg-slate-900 p-4 rounded-lg cursor-pointer hover:bg-slate-900/75 mt-4">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
             class="size-6">

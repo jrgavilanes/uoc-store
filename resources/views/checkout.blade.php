@@ -24,7 +24,6 @@
                         Checkout
                     </button>
                 </a>
-
             </div>
 
             <div class="flex flex-col gap-4 w-full border border-red-400 p-4">
@@ -39,6 +38,7 @@
                     </button>
                 </a>
             </div>
+
         </section>
     </div>
 

@@ -23,24 +23,24 @@
         </ul>
     </nav>
     <div class="text-red-200 mt-4 border border-red-400 min-w-[400px] min-h-[400px] p-2">
-        <p>Home</p>
-        <section class="flex flex-col items-center justify-center space-y-4 my-8">
-            <div class="flex justify-between items-center gap-4">
-                <img src="https://via.placeholder.com/50x50/ff0000/ffffff
-                " alt="">
-                <p>category 1</p>
-            </div>
-            <div class="flex justify-between items-center gap-4">
-                <img src="https://via.placeholder.com/50x50/ff0000/ffffff
-                " alt="">
-                <p>category 2</p>
-            </div>
-            <div class="flex justify-between items-center gap-4">
-                <img src="https://via.placeholder.com/50x50/ff0000/ffffff
-                " alt="">
-                <p>category 3</p>
-            </div>
+        <p>Login</p>
+        <section>
+            <form class = "flex flex-col items-center justify-center space-y-4 my-8 p-4" method="post"
+                action="{{ route('login.post') }}">
+                @csrf
+                <input class="px-2 h-9 w-full text-slate-800" type="email" name="email" id="email" value="{{ old('email') }}"
+                    placeholder="email" required>
+                <input class="px-2 h-9 w-full text-slate-800" type="password" name="password" id="password"
+                    placeholder="password" required>
+                <button type = "submit" class="text-white bg-slate-300/50 px-2 py-2 w-full rounded-xl hover:bg-slate-500">
+                    Log in
+                </button>
+            </form>
         </section>
+        @if (session('error'))
+            <div class="text-red-500 text-center">
+                {{ session('error') }}
+            </div>
+        @endif
     </div>
-    <p class="text-white"><a href="{{route('dashboard')}}">admin</a></p>
 @endsection

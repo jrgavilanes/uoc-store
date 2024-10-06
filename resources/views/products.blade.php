@@ -35,7 +35,25 @@
                         laudantium odit iste amet? Est, sit quasi?</p>
                 </div>
             </div>
-            <button class="text-white bg-slate-700/50 px-2 py-2 w-full rounded-xl hover:bg-slate-700">Add to Cart</button>
+            <button x-data
+                @click="Swal.fire({
+                title: 'Producto añadido a la cesta',
+                text: '¿Desea ir a la cesta o seguir comprando?',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonText: 'Ir a la cesta',
+                cancelButtonText: 'Seguir comprando',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirigir a la cesta
+                    window.location.href = '{{ route('cart') }}'; // Asegúrate de tener la ruta 'cart' definida
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    // Redirigir a la página principal para seguir comprando
+                    window.location.href = '{{ route('home') }}';
+                }
+            })"
+                class="text-white bg-slate-700/50 px-2 py-2 w-full rounded-xl hover:bg-slate-700">Add to Cart</button>
         </section>
     </div>
 
