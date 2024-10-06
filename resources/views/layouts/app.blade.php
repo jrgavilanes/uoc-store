@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>App Name @yield('title')</title>
     @vite('resources/css/app.css')
-
     @livewireStyles
 </head>
 
@@ -16,6 +15,8 @@
         @yield('content')
     </div>
 
+
+    @vite('resources/js/app.js')
     @livewireScripts
 </body>
 

@@ -37,3 +37,25 @@ sail npm install -D tailwindcss postcss autoprefixer
 sail npx tailwindcss init -p
 
 ```
+
+
+## Desarrollo ( requiere docker instalado )
+
+La primera vez que descargas el proyecto, tienes que instalar dependencias laravel y node.
+
+```bash
+docker run --rm \
+    -v $(pwd):/var/www/html \
+    -w /var/www/html \
+    laravelsail/php82-composer:latest \
+    composer install --ignore-platform-reqs
+```
+
+Ahora ya tenemos composer, deberíamos poder ejecutar sail up
+
+```
+sail npm run build
+
+```
+
+
