@@ -58,4 +58,9 @@ sail npm run build
 
 ```
 
+Inserta usuario admin de pruebas
+```bash
+sail artisan db:seed
+```
+
 
