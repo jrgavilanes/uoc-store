@@ -17,4 +17,9 @@ class Category extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    public function getImageUrlAttribute(): string
+    {
+        return asset('images/categories/' . $this->image);
+    }
 }

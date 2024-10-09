@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <nav class="flex justify-between items-center w-[400px]">
+    {{-- <nav class="flex justify-between items-center w-[400px]">
         <ul class="flex gap-4 ">
             <li><a class="text-blue-300 hover:text-blue-500" href="/">Home</a></li>
             <li><a class="text-blue-300 hover:text-blue-500" href="/categories">Category 1</a></li>
@@ -21,15 +21,15 @@
                 </a>
             </li>
         </ul>
-    </nav>
+    </nav> --}}
     <div class="text-red-200 mt-4 border border-red-400 w-[400px] min-h-[400px] p-2">
-        <p>Product {{ $id }}</p>
+        <p>Product {{ $product->name }}</p>
         <section class="flex flex-col items-center justify-center space-y-4 my-8">
             <div class="flex gap-4">
                 <img src="https://via.placeholder.com/100/ff0000/ffffff
                     " alt="">
                 <div class="flex flex-col">
-                    <p>Product {{ $id }}</p>
+                    <p>Product {{ $product->name }}</p>
                     <p class="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure error
                         exercitationem excepturi eum quidem eveniet, repellat vel modi dolor sit a laboriosam sint
                         laudantium odit iste amet? Est, sit quasi?</p>

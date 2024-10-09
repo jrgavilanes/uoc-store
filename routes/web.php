@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Category;
+use App\Models\Product;
+use Dotenv\Util\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -9,16 +12,32 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', function () {
-    return view('home');
+    $categories = Category::all();
+    return view('home', compact('categories'));
 })->name('home');
 
-Route::get('/categories', function () {
-    return view('categories');
-});
+Route::get('/categories/{slug}', function ($slug) {
+    $category = Category::where('slug', $slug)->first();
+    if (!$category) {
+        abort(404);
+    }
 
-Route::get('/products/{id}', function ($id) {
-    return view('products', ['id' => $id]);
-});
+    $products = $category->products;
+    $categories = Category::all();
+
+    return view('categories', compact('category', 'products', 'categories'));
+})->name('categories');
+
+Route::get('/products/{slug}', function ($slug) {
+    $product = Product::where('slug', $slug)->first();
+    if (!$product) {
+        abort(404);
+    }
+
+    $categories = Category::all();
+
+    return view('products', compact('product', 'categories'));
+})->name('products');
 
 Route::get('/cart', function () {
     return view('cart');
