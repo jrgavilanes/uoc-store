@@ -51,7 +51,7 @@ docker run --rm \
     composer install --ignore-platform-reqs
 ```
 
-Ahora ya tenemos composer, deberíamos poder ejecutar sail up
+Ahora ya con las dependencias instaladas ejecutamos el entorno de desarrollo
 
 ```bash
 sail sail up
