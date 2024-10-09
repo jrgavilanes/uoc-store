@@ -53,22 +53,10 @@ docker run --rm \
 
 Ahora ya tenemos composer, deberíamos poder ejecutar sail up
 
-```
-sail npm run build
-sail artisan db:migrate --seed
-
-```
-
-Inserta usuario admin de pruebas
 ```bash
-sail artisan db:seed
+sail sail up
+sail npm run dev
+sail artisan db:migrate --seed
 ```
 
-
-## Migraciones
-
-```sh
-sail artisan make:model Product -mfc
-sail artisan make:model Category -mfc
-sail artisan make:model Order -mfc
-```
+![Esquema DB](/documentation/uoc-store-schema.png)
