@@ -55,6 +55,7 @@ Ahora ya tenemos composer, deberíamos poder ejecutar sail up
 
 ```
 sail npm run build
+sail artisan db:migrate --seed
 
 ```
 
@@ -64,3 +65,10 @@ sail artisan db:seed
 ```
 
 
+## Migraciones
+
+```sh
+sail artisan make:model Product -mfc
+sail artisan make:model Category -mfc
+sail artisan make:model Order -mfc
+```
