@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $categories = Category::all();
+
     return view('home', compact('categories'));
+
 })->name('home');
 
 Route::get('/categories/{slug}', function ($slug) {
@@ -26,6 +28,7 @@ Route::get('/categories/{slug}', function ($slug) {
     $categories = Category::all();
 
     return view('categories', compact('category', 'products', 'categories'));
+
 })->name('categories');
 
 Route::get('/products/{slug}', function ($slug) {
@@ -37,10 +40,13 @@ Route::get('/products/{slug}', function ($slug) {
     $categories = Category::all();
 
     return view('products', compact('product', 'categories'));
+
 })->name('products');
 
 Route::get('/cart', function () {
-    return view('cart');
+    $categories = Category::all();
+
+    return view('cart', compact('categories'));
 })->name('cart');
 
 Route::get('/checkout', function () {
