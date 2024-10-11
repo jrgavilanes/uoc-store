@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div x-data="cart()" x-init="init()" class="text-red-200 mt-4 w-[800px] min-h-[600px] p-2">
+    <div x-data="cart()" x-init="init()" class="text-red-200 mt-4 sm:w-[800px] min-h-[600px] p-2">
         <p>Cart</p>
 
         <section class="flex flex-col items-center justify-start space-y-4 my-8 min-h-[400px]">
@@ -43,8 +43,13 @@
 
                     <p class="text-xs" x-text="`${product.price*product.quantity} €`"></p>
                     <button @click="remove(index)"
-                        class="bg-blue-500 hover:bg-blue-700 duration-300 text-white px-4 py-2 rounded">
-                        Remove
+                        class="bg-red-500 hover:bg-red-700 duration-300 text-white px-4 py-2 rounded">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                        </svg>
+
                     </button>
 
                 </div>
@@ -61,7 +66,7 @@
 
         <a href="{{ route('checkout') }}">
             <div
-                class="flex flex-col items-center justify-center bg-slate-900 rounded-lg cursor-pointer hover:bg-slate-900/75 p-4">
+                class="flex flex-col items-center justify-center bg-slate-700/50 rounded-lg cursor-pointer hover:bg-slate-700 p-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -83,8 +88,32 @@
                     this.cart = JSON.parse(sessionStorage.getItem('cart')) || [];
                 },
                 remove(index) {
-                    this.cart.splice(index, 1);
-                    sessionStorage.setItem('cart', JSON.stringify(this.cart));
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!',
+                        background: '#333',
+                        color: '#fff',
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.cart.splice(index, 1);
+                            sessionStorage.setItem('cart', JSON.stringify(this.cart));
+                            Swal.fire({
+                                title: 'Deleted!',
+                                text: 'Your item has been deleted.',
+                                icon: 'success',
+                                timer: 1500,
+                                showConfirmButton: false,
+                                background: '#333',
+                                color: '#fff',
+                            });
+                        }
+                    })
+
                 },
                 add(index) {
                     if (this.cart[index].quantity < 5) {

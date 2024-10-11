@@ -25,6 +25,21 @@
         </section>
     </div>
 
+    @if(auth()->check())
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Logged In',
+                    text: "{{ session('logged') }}",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            });
+        </script>
+    @endif
+
+
 
 
 @endsection

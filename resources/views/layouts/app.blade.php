@@ -14,7 +14,7 @@
 <body class="bg-slate-800">
     <div class="h-screen flex flex-col justify-start items-center mt-4 w-full">
 
-        <nav class="flex justify-between items-center w-[800px]">
+        <nav class="flex justify-between items-center sm:w-[800px]">
             <ul class="flex gap-4 w-full">
                 <li>
                     <a class="text-blue-300 hover:text-blue-500" href="{{ route('home') }}">Home</a>
@@ -44,7 +44,7 @@
 
         @yield('content')
 
-        <div class="h-[1px] bg-white/5 w-[800px]"></div>
+        <div class="h-[1px] bg-white/5 sm:w-[800px]"></div>
         <p class="text-white text-xs mt-2"><a href="{{ route('dashboard') }}">- admin -</a></p>
 
     </div>
