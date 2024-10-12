@@ -118,7 +118,7 @@
 
                         Swal.fire({
                             title: `Order #${result['order_id']} confirmed`,
-                            text: 'Check your email for the order details (not really ;)',
+                            text: 'Check your email for the order details (well, not really 😆)',
                             icon: 'success',
                             confirmButtonText: 'Ok',
                             background: '#333',

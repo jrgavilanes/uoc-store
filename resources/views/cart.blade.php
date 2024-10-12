@@ -9,7 +9,7 @@
 
         <section class="flex flex-col items-center justify-start space-y-4 my-8 min-h-[400px]">
 
-            <p class="sm:text-4xl" x-show="cart.length==0">The cart is empty</p>
+            <p class="sm:text-4xl" x-show="cart.length==0">Your cart is empty</p>
 
             <template x-for="(product, index) in cart" :key="product.product_id">
                 <div class="flex justify-start items-center gap-4 w-full">

@@ -2,8 +2,10 @@
 
 use App\Models\Category;
 use App\Models\Order;
+use App\Models\OrderLine;
 use App\Models\Product;
 use Dotenv\Util\Str;
+use GuzzleHttp\Handler\Proxy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -76,14 +78,14 @@ Route::post('/login', function (Request $request) {
         $user = Auth::user();
 
         session()->forget('user');
-            $data['user'] = [];
-            $data['user']['type'] = "registered";
-            $data['user']['id'] = $user->id;
-            $data['user']['name'] = $user->name;
-            $data['user']['email'] = $user->email;
-            $data['user']['address'] = $user->address;
-            $data['user']['guest_address'] = "";
-            $data['user']['guest_email'] = "";
+        $data['user'] = [];
+        $data['user']['type'] = "registered";
+        $data['user']['id'] = $user->id;
+        $data['user']['name'] = $user->name;
+        $data['user']['email'] = $user->email;
+        $data['user']['address'] = $user->address;
+        $data['user']['guest_address'] = "";
+        $data['user']['guest_email'] = "";
         session()->put('user', $data['user']);
 
 
@@ -101,7 +103,18 @@ Route::post('/login', function (Request $request) {
 
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+
+    $user = Auth::user();
+
+    if (!$user->is_admin) {
+        return redirect()->route('home');
+    }
+
+    $orders = Order::select('id', 'user_id', 'created_at')
+        ->orderBy('id', 'desc')
+        ->paginate(10);
+
+    return view('dashboard', compact('orders'));
 })->middleware('auth')->name('dashboard');
 
 Route::post('/logout', function () {
@@ -187,8 +200,6 @@ Route::post('/final-checkout', function (Request $request) {
         'cart' => 'required|array',
     ]);
 
-    // dd($data, session()->get('user'));
-
     if (!session()->has('user')) {
         return response()->json([
             'status' => 'error',
@@ -211,8 +222,6 @@ Route::post('/final-checkout', function (Request $request) {
         ]);
     }
 
-
-
     foreach ($data['cart'] as $item) {
         $order->orderLines()->create([
             'product_id' => $item['product_id'],
@@ -225,5 +234,25 @@ Route::post('/final-checkout', function (Request $request) {
         'status' => 'ok',
         'order_id' => $order->id,
     ], 201);
-
 })->name('final-checkout');
+
+
+
+Route::get('/purchase-detail/{id}', function ($id) {
+    $user = Auth::user();
+
+    if (! $user->is_admin) {
+        return redirect()->route('home');
+    }
+
+    $purchase = Order::find($id);
+
+    $orderTotal = OrderLine::where('order_id', $id)
+                ->selectRaw('SUM(price * quantity) as total')
+                ->value('total');
+
+    $orderTaxes = $orderTotal / 1.21 * 0.21;
+    $orderTaxes = round($orderTaxes, 2);
+
+    return view('purchase-detail', compact('purchase', 'orderTotal', 'orderTaxes'));
+})->middleware('auth')->name('purchase-detail');
