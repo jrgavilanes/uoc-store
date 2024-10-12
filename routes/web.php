@@ -4,16 +4,10 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderLine;
 use App\Models\Product;
-use Dotenv\Util\Str;
-use GuzzleHttp\Handler\Proxy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\ValidationException;
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 Route::get('/', function () {
     $categories = Category::all();
@@ -74,30 +68,27 @@ Route::post('/login', function (Request $request) {
     $credentials = $request->only('email', 'password');
 
     if (Auth::attempt($credentials)) {
-
         $user = Auth::user();
-
         session()->forget('user');
-        $data['user'] = [];
-        $data['user']['type'] = "registered";
-        $data['user']['id'] = $user->id;
-        $data['user']['name'] = $user->name;
-        $data['user']['email'] = $user->email;
-        $data['user']['address'] = $user->address;
-        $data['user']['guest_address'] = "";
-        $data['user']['guest_email'] = "";
+            $data['user'] = [];
+            $data['user']['type'] = "registered";
+            $data['user']['id'] = $user->id;
+            $data['user']['name'] = $user->name;
+            $data['user']['email'] = $user->email;
+            $data['user']['address'] = $user->address;
+            $data['user']['guest_address'] = "";
+            $data['user']['guest_email'] = "";
         session()->put('user', $data['user']);
-
-
 
         if (Auth::user()->is_admin) {
             return redirect()->route('dashboard');
         } else {
-            return redirect()->route('home')->with('logged', 'You are logged in');
+            return redirect()->route('home');
         }
     }
 
     return redirect()->route('login')->with('error', 'wrong email or password')->withInput();
+
 })->name('login.post');
 
 
@@ -115,6 +106,7 @@ Route::get('/dashboard', function () {
         ->paginate(10);
 
     return view('dashboard', compact('orders'));
+
 })->middleware('auth')->name('dashboard');
 
 Route::post('/logout', function () {
@@ -136,18 +128,16 @@ Route::post('/checkout-set-guest', function (Request $request) {
     $data['user']['email'] = "";
     $data['user']['address'] = "";
 
-
     session()->put('user', $data['user']);
 
-    // session()->forget('user');
-
     return response()->json(["status" => "ok"]);
+
 })->name('checkout-set-guest');
 
 Route::post('/checkout-login', function (Request $request) {
 
     try {
-        // Realiza la validación
+
         $data = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -161,15 +151,13 @@ Route::post('/checkout-login', function (Request $request) {
             $user = Auth::user();
 
             session()->forget('user');
-
-            $data['user']['type'] = "registered";
-            $data['user']['id'] = $user->id;
-            $data['user']['name'] = $data['name'];
-            $data['user']['email'] = $data['email'];
-            $data['user']['address'] = $data['address'];
-            $data['user']['guest_address'] = "";
-            $data['user']['guest_email'] = "";
-
+                $data['user']['type'] = "registered";
+                $data['user']['id'] = $user->id;
+                $data['user']['name'] = $data['name'];
+                $data['user']['email'] = $data['email'];
+                $data['user']['address'] = $data['address'];
+                $data['user']['guest_address'] = "";
+                $data['user']['guest_email'] = "";
             session()->put('user', $data['user']);
 
             return response()->json([
@@ -177,11 +165,14 @@ Route::post('/checkout-login', function (Request $request) {
                 'message' => 'You are logged in',
                 'user_id' => $user->id
             ]);
+
         } else {
+
             return response()->json([
                 'status' => 'error',
                 'message' => 'wrong email or password'
             ], 401);
+            
         }
     } catch (ValidationException $e) {
         // Captura los errores de validación y los devuelve en JSON
