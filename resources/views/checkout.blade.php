@@ -12,20 +12,20 @@
                 <p>Guest users</p>
                 <div class="flex flex-col gap-2">
                     <label for="guest_email" class="text-xs">Guest email</label>
-                    <input class="px-2 h-9 w-full text-slate-800" type="email" name="guest_email" id="guest_email"
-                        placeholder="ex: name@server.com" autocomplete="off">
+                    <input x-model="user.guest_email" class="px-2 h-9 w-full text-slate-800" type="email" name="guest_email"
+                        id="guest_email" placeholder="ex: name@server.com" autocomplete="off">
                 </div>
                 <div class="flex flex-col gap-2">
-                    <label for="guest_name" class="text-xs">Guest name</label>
-                    <textarea class="px-2 text-slate-800" name="guest_address" id="guest_address" rows="3"
-                        placeholder="postal address"></textarea>
+                    <label for="guest_address" class="text-xs">Guest address</label>
+                    <textarea x-model="user.guest_address" class="px-2 text-slate-800" name="guest_address" id="guest_address"
+                        rows="3" placeholder="postal address"></textarea>
                 </div>
 
-                <a href="{{ route('order-summary') }}">
-                    <button class="text-white bg-blue-700 hover:bg-blue-600  px-2 py-2 w-full rounded-xl">
-                        Checkout
-                    </button>
-                </a>
+                {{-- <a href="{{ route('order-summary') }}"> --}}
+                <button @click="setGuest()" class="text-white bg-blue-700 hover:bg-blue-600  px-2 py-2 w-full rounded-xl">
+                    Checkout
+                </button>
+                {{-- </a> --}}
             </div>
 
             <div class="flex flex-col gap-4 w-full border border-green-500 rounded-xl p-4">
@@ -65,10 +65,46 @@
         function checkout() {
             return {
                 user: {
-                    name: '',
-                    email: '',
-                    address: '',
+                    name: "{{ session('user.name', '') }}",
+                    email: "{{ session('user.email', '') }}",
+                    address: "{{ session('user.address', '') }}",
                     password: '',
+                    guest_email: "{{ session('user.guest_email', '') }}",
+                    guest_address: "{{ session('user.guest_address', '') }}",
+                },
+                async setGuest() {
+
+                    if (!this.user.guest_email || !this.user.guest_address) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'All Guest fields are required!',
+                            background: '#333',
+                            color: '#fff',
+                            confirmButtonColor: '#1d72b8',
+                        });
+                        return;
+                    }
+
+                    const payload = {
+                        user: this.user,
+                    }
+
+                    let response = await fetch("{{ route('checkout-set-guest') }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        console.error('There has been a problem with your fetch operation:', error);
+                        return;
+                    }
+
+                    window.location.href = '{{ route('order-summary') }}';
                 },
                 async login() {
 
@@ -77,9 +113,9 @@
                             icon: 'error',
                             title: 'Oops...',
                             text: 'All fields are required!',
-                            background: '#333', // Fondo oscuro
-                            color: '#fff', // Texto en blanco para contraste en modo oscuro
-                            confirmButtonColor: '#1d72b8', // Color del botón de confirmación en modo oscuro
+                            background: '#333',
+                            color: '#fff',
+                            confirmButtonColor: '#1d72b8',
                         });
                         return;
                     }
@@ -97,33 +133,28 @@
                         if (response.ok) {
                             let data = await response.json()
 
-                            sessionStorage.setItem('user', JSON.stringify({
-                                name: this.user.name,
-                                email: this.user.email,
-                                address: this.user.address,
-                                id: data.user_id
-                            }));
+                            // sessionStorage.setItem('user', JSON.stringify({
+                            //     name: this.user.name,
+                            //     email: this.user.email,
+                            //     address: this.user.address,
+                            //     id: data.user_id
+                            // }));
 
-                            // Swal de 1,5s usuario logueado
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Logged In',
-                                text: 'User logged in',
-                                timer: 1500,
-                                showConfirmButton: false,
-                                background: '#333', // Fondo oscuro
-                                color: '#fff', // Texto blanco para contraste en modo oscuro
-                            }).then(() => {
-                                //redirige a la página de resumen de order-summary
-                                window.location.href = '{{ route('order-summary') }}';
-                            });
+                            // Swal.fire({
+                            //     icon: 'success',
+                            //     title: 'Logged In',
+                            //     text: 'User logged in',
+                            //     timer: 1500,
+                            //     showConfirmButton: false,
+                            //     background: '#333', // Fondo oscuro
+                            //     color: '#fff', // Texto blanco para contraste en modo oscuro
+                            // }).then(() => {
+                            //     //redirige a la página de resumen de order-summary
+                            //     window.location.href = '{{ route('order-summary') }}';
+                            // });
 
-                            //redirige a la página de resumen de order-summary
-                            // window.location.href = '{{ route('order-summary') }}';
+                            window.location.href = '{{ route('order-summary') }}';
 
-                            // let result = await response.json();
-                            // alert('Login successful');
-                            // console.log(result);
                         } else {
                             Swal.fire({
                                 icon: 'error',

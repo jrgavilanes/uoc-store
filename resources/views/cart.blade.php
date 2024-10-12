@@ -6,7 +6,7 @@
 
     <div x-data="cart()" x-init="init()" class="text-red-200 mt-4 sm:w-[800px] min-h-[600px] p-2">
         <p>Cart</p>
-
+        
         <section class="flex flex-col items-center justify-start space-y-4 my-8 min-h-[400px]">
 
             <p class="sm:text-4xl" x-show="cart.length==0">The cart is empty</p>

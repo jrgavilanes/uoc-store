@@ -25,7 +25,7 @@
         </section>
     </div>
 
-    @if(auth()->check())
+    {{-- @if(auth()->check())
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 Swal.fire({
@@ -37,7 +37,7 @@
                 });
             });
         </script>
-    @endif
+    @endif --}}
 
 
 

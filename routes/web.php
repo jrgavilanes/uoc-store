@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use Dotenv\Util\Str;
 use Illuminate\Http\Request;
@@ -71,6 +72,22 @@ Route::post('/login', function (Request $request) {
     $credentials = $request->only('email', 'password');
 
     if (Auth::attempt($credentials)) {
+
+        $user = Auth::user();
+
+        session()->forget('user');
+            $data['user'] = [];
+            $data['user']['type'] = "registered";
+            $data['user']['id'] = $user->id;
+            $data['user']['name'] = $user->name;
+            $data['user']['email'] = $user->email;
+            $data['user']['address'] = $user->address;
+            $data['user']['guest_address'] = "";
+            $data['user']['guest_email'] = "";
+        session()->put('user', $data['user']);
+
+
+
         if (Auth::user()->is_admin) {
             return redirect()->route('dashboard');
         } else {
@@ -81,19 +98,67 @@ Route::post('/login', function (Request $request) {
     return redirect()->route('login')->with('error', 'wrong email or password')->withInput();
 })->name('login.post');
 
+
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware('auth')->name('dashboard');
+
+Route::post('/logout', function () {
+    Auth::logout();
+    session()->forget('user');
+    return redirect()->route('home');
+})->middleware('auth')->name('logout');
+
+
+Route::post('/checkout-set-guest', function (Request $request) {
+    $data = $request->validate([
+        'user' => 'required|array',
+    ]);
+
+    // Elimino datos de usuario registrado por si viniese en la peticion
+    $data['user']['type'] = "guest";
+    $data['user']['id'] = null;
+    $data['user']['name'] = "";
+    $data['user']['email'] = "";
+    $data['user']['address'] = "";
+
+
+    session()->put('user', $data['user']);
+
+    // session()->forget('user');
+
+    return response()->json(["status" => "ok"]);
+})->name('checkout-set-guest');
+
 Route::post('/checkout-login', function (Request $request) {
 
     try {
         // Realiza la validación
-        $request->validate([
+        $data = $request->validate([
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required',
+            'address' => 'required',
+            'name' => 'required'
         ]);
 
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
+
+            session()->forget('user');
+
+            $data['user']['type'] = "registered";
+            $data['user']['id'] = $user->id;
+            $data['user']['name'] = $data['name'];
+            $data['user']['email'] = $data['email'];
+            $data['user']['address'] = $data['address'];
+            $data['user']['guest_address'] = "";
+            $data['user']['guest_email'] = "";
+
+            session()->put('user', $data['user']);
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'You are logged in',
@@ -114,11 +179,51 @@ Route::post('/checkout-login', function (Request $request) {
     }
 })->name('checkout-login');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth')->name('dashboard');
 
-Route::post('/logout', function () {
-    Auth::logout();
-    return redirect()->route('home');
-})->middleware('auth')->name('logout');
+
+Route::post('/final-checkout', function (Request $request) {
+
+    $data = $request->validate([
+        'cart' => 'required|array',
+    ]);
+
+    // dd($data, session()->get('user'));
+
+    if (!session()->has('user')) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'You must be logged in to place an order'
+        ], 401);
+    }
+
+    $order = null;
+    if (session()->get('user')['type'] === 'guest') {
+        $order = Order::create([
+            'user_id' => null,
+            'email' => session()->get('user')['guest_email'],
+            'address' => session()->get('user')['guest_address'],
+        ]);
+    } else {
+        $order = Order::create([
+            'user_id' => session()->get('user')['id'],
+            'email' => session()->get('user')['email'],
+            'address' => session()->get('user')['address'],
+        ]);
+    }
+
+
+
+    foreach ($data['cart'] as $item) {
+        $order->orderLines()->create([
+            'product_id' => $item['product_id'],
+            'quantity' => $item['quantity'],
+            'price' => Product::find($item['product_id'])->price ?? null,
+        ]);
+    }
+
+    return response()->json([
+        'status' => 'ok',
+        'order_id' => $order->id,
+    ], 201);
+
+})->name('final-checkout');
