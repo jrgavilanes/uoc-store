@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'My Store')
+@section('title', 'Checkout')
 
 @section('content')
 
-    <div x-data="checkout()" class="text-red-200 mt-4 sm:w-[800px] min-h-[600px] p-2">
+    <div x-data="checkout()" class="text-red-200 mt-4 sm:max-w-[800px] min-h-[600px] p-2">
         <p>Checkout</p>
-        <section class="flex items-start justify-center gap-4 mt-4 ">
+        <section class="flex flex-col sm:flex-row items-start justify-center gap-4 mt-4 ">
 
             <div class="flex flex-col gap-4 w-full border border-blue-500 rounded-xl p-4">
                 <p>Guest users</p>
@@ -21,11 +21,9 @@
                         rows="3" placeholder="postal address"></textarea>
                 </div>
 
-                {{-- <a href="{{ route('order-summary') }}"> --}}
                 <button @click="setGuest()" class="text-white bg-blue-700 hover:bg-blue-600  px-2 py-2 w-full rounded-xl">
                     Checkout
                 </button>
-                {{-- </a> --}}
             </div>
 
             <div class="flex flex-col gap-4 w-full border border-green-500 rounded-xl p-4">
@@ -51,11 +49,9 @@
                     <textarea x-model="user.address" class="px-2 text-slate-800" name="address" id="address" rows="3"
                         placeholder="postal address"></textarea>
                 </div>
-                {{-- <a href="{{ route('order-summary') }}"> --}}
                 <button @click="login()" class="text-white bg-green-700 px-2 py-2 w-full rounded-xl hover:bg-green-600">
                     Checkout
                 </button>
-                {{-- </a> --}}
             </div>
 
         </section>
@@ -131,27 +127,6 @@
                         });
 
                         if (response.ok) {
-                            let data = await response.json()
-
-                            // sessionStorage.setItem('user', JSON.stringify({
-                            //     name: this.user.name,
-                            //     email: this.user.email,
-                            //     address: this.user.address,
-                            //     id: data.user_id
-                            // }));
-
-                            // Swal.fire({
-                            //     icon: 'success',
-                            //     title: 'Logged In',
-                            //     text: 'User logged in',
-                            //     timer: 1500,
-                            //     showConfirmButton: false,
-                            //     background: '#333', // Fondo oscuro
-                            //     color: '#fff', // Texto blanco para contraste en modo oscuro
-                            // }).then(() => {
-                            //     //redirige a la página de resumen de order-summary
-                            //     window.location.href = '{{ route('order-summary') }}';
-                            // });
 
                             window.location.href = '{{ route('order-summary') }}';
 

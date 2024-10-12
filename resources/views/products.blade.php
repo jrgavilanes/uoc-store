@@ -1,21 +1,21 @@
 @extends('layouts.app')
 
-@section('title', 'My Store')
+@section('title', 'Product')
 
 @section('content')
 
-    <div x-data="productDetail()" class="text-red-200 mt-4 w-[800px] min-h-[600px] p-2">
+    <div x-data="productDetail()" class="text-red-200 mt-4 sm:w-[800px] min-h-[600px] p-2">
         <p>Product detail</p>
         <section>
-            <div class="flex gap-4 mt-8">
-                <img class="w-1/4" src="{{ $product->imageUrl }}" alt="">
-                <div class="w-3/4 flex flex-col gap-4">
+            <div class="flex flex-col sm:flex-row gap-4 mt-8">
+                <img class="sm:w-1/4" src="{{ $product->imageUrl }}" alt="">
+                <div class="sm:w-3/4 flex flex-col gap-4">
                     <p class="font-bold">{{ $product->name }}</p>
                     <p class="text-sm"><span class="font-semibold">Description: </span><br>{{ $product->description }}</p>
                     <p class="text-sm"><span class="font-semibold">Price: </span><br>{{ $product->price }} €</p>
                     <button x-data
                         @click="addToCart({{ $product->id }}, '{{ $product->name }}', '{{ $product->imageUrl }}', {{ $product->price }})"
-                        class="text-white bg-slate-700/50 px-2 py-2 w-1/2 rounded-xl hover:bg-slate-700">
+                        class="text-white bg-slate-700/50 px-2 py-2 sm:w-1/2 rounded-xl hover:bg-slate-700">
                         Add to Cart
                     </button>
                 </div>

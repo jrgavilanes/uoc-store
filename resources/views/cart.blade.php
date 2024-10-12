@@ -1,19 +1,19 @@
 @extends('layouts.app')
 
-@section('title', 'My Store')
+@section('title', 'Cart')
 
 @section('content')
 
     <div x-data="cart()" x-init="init()" class="text-red-200 mt-4 sm:w-[800px] min-h-[600px] p-2">
         <p>Cart</p>
-        
+
         <section class="flex flex-col items-center justify-start space-y-4 my-8 min-h-[400px]">
 
             <p class="sm:text-4xl" x-show="cart.length==0">The cart is empty</p>
 
             <template x-for="(product, index) in cart" :key="product.product_id">
                 <div class="flex justify-start items-center gap-4 w-full">
-                    <img :src="product.imageUrl" alt="" class="w-12 h-12">
+                    <img :src="product.imageUrl" alt="" class="sm:w-12 h-12">
                     <p class="flex-1" x-text="product.product_name"></p>
 
                     <div class="relative flex items-center max-w-[8rem]">
@@ -64,7 +64,7 @@
             <span class="font-bold ms-4">€</span>
         </div>
 
-        <a href="{{ route('checkout') }}">
+        <button @click="checkout()" class="w-full">
             <div
                 class="flex flex-col items-center justify-center bg-slate-700/50 rounded-lg cursor-pointer hover:bg-slate-700 p-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -76,7 +76,7 @@
                     checkout
                 </p>
             </div>
-        </a>
+        </button>
 
     </div>
 
@@ -86,6 +86,19 @@
                 cart: [],
                 init() {
                     this.cart = JSON.parse(sessionStorage.getItem('cart')) || [];
+                },
+                checkout() {
+                    if (this.cart.length == 0) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'The cart is empty!',
+                            background: '#333',
+                            color: '#fff',
+                        });
+                    } else {
+                        window.location.href = "{{ route('checkout') }}";
+                    }
                 },
                 remove(index) {
                     Swal.fire({
