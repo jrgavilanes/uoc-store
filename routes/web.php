@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderLine;
@@ -9,34 +11,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\ValidationException;
 
-Route::get('/', function () {
-    $categories = Category::all();
 
-    return view('home', compact('categories'));
-})->name('home');
+// Home and Categories
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/categories/{slug}', [HomeController::class, 'showCategory'])->name('categories');
 
-Route::get('/categories/{slug}', function ($slug) {
-    $category = Category::where('slug', $slug)->first();
-    if (!$category) {
-        abort(404);
-    }
 
-    $products = $category->products;
-    $categories = Category::all();
+// Products
+Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products');
 
-    return view('categories', compact('category', 'products', 'categories'));
-})->name('categories');
-
-Route::get('/products/{slug}', function ($slug) {
-    $product = Product::where('slug', $slug)->first();
-    if (!$product) {
-        abort(404);
-    }
-
-    $categories = Category::all();
-
-    return view('products', compact('product', 'categories'));
-})->name('products');
 
 Route::get('/cart', function () {
     $categories = Category::all();
@@ -172,7 +155,7 @@ Route::post('/checkout-login', function (Request $request) {
                 'status' => 'error',
                 'message' => 'wrong email or password'
             ], 401);
-            
+
         }
     } catch (ValidationException $e) {
         // Captura los errores de validación y los devuelve en JSON
