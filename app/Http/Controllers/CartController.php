@@ -55,13 +55,13 @@ class CartController extends Controller
                 $user = Auth::user();
 
                 session()->forget('user');
-                    $data['user']['type'] = "registered";
-                    $data['user']['id'] = $user->id;
-                    $data['user']['name'] = $data['name'];
-                    $data['user']['email'] = $data['email'];
-                    $data['user']['address'] = $data['address'];
-                    $data['user']['guest_address'] = "";
-                    $data['user']['guest_email'] = "";
+                $data['user']['type'] = "registered";
+                $data['user']['id'] = $user->id;
+                $data['user']['name'] = $data['name'];
+                $data['user']['email'] = $data['email'];
+                $data['user']['address'] = $data['address'];
+                $data['user']['guest_address'] = "";
+                $data['user']['guest_email'] = "";
                 session()->put('user', $data['user']);
 
                 return response()->json([
@@ -124,7 +124,6 @@ class CartController extends Controller
             'status' => 'ok',
             'order_id' => $order->id,
         ], 201);
-
     }
 
     public function orderSummary()
