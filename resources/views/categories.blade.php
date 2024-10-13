@@ -8,8 +8,10 @@
         <p>{{ $category->name }}</p>
         <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-8 mb-16">
             @if ($products->isEmpty())
-                <p class="col-span-3 text-center text-gray-400 text-lg mt-24">No products found. <a
-                        href="{{ route('home') }}" class="underline text-blue-500 hover:text-blue-300">go to frontpage</a></p>
+                <p class="col-span-3 text-center text-gray-400 text-lg mt-24">
+                    No products found. <a href="{{ route('home') }}" class="underline text-blue-500 hover:text-blue-300">
+                        Go to frontpage</a><span class="ms-4 text-5xl">🧐</span>
+                </p>
             @else
                 @foreach ($products as $product)
                     <a href="{{ route('products', $product->slug) }}">
