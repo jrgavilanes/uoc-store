@@ -105,52 +105,144 @@ class ProductSeeder extends Seeder
             'slug' => Str::slug('Bubble Bobble'),
         ]);
 
-        // Product::factory()->create([
-        //     'category_id' => 1,
-        //     'name' => 'Product 1',
-        //     'description' => 'Product 1 description',
-        //     'image' => 'product1.jpg',
-        //     'price' => 100,
-        // ]);
 
-        // Product::factory()->create([
-        //     'category_id' => 1,
-        //     'name' => 'Product 2',
-        //     'description' => 'Product 2 description',
-        //     'image' => 'product2.jpg',
-        //     'price' => 200,
-        // ]);
+        Product::factory()->create([
+            'category_id' => 2,
+            'name' => 'Castlevania',
+            'description' => 'Classic platformer with gothic themes and challenging gameplay.',
+            'image' => 'castlevania.jpg',
+            'price' => 100,
+            'slug' => Str::slug('Castlevania'),
+        ]);
 
-        // Product::factory()->create([
-        //     'category_id' => 2,
-        //     'name' => 'Product 3',
-        //     'description' => 'Product 3 description',
-        //     'image' => 'product3.jpg',
-        //     'price' => 300,
-        // ]);
+        Product::factory()->create([
+            'category_id' => 2,
+            'name' => 'The Legend of Zelda',
+            'description' => 'Adventure game featuring exploration, puzzles, and iconic characters.',
+            'image' => 'legendofzelda.jpg',
+            'price' => 90,
+            'slug' => Str::slug('The Legend of Zelda'),
+        ]);
 
-        // Product::factory()->create([
-        //     'category_id' => 2,
-        //     'name' => 'Product 4',
-        //     'description' => 'Product 4 description',
-        //     'image' => 'product4.jpg',
-        //     'price' => 400,
-        // ]);
+        Product::factory()->create([
+            'category_id' => 2,
+            'name' => 'Donkey Kong',
+            'description' => 'Arcade classic featuring the famous Mario and challenging obstacles.',
+            'image' => 'donkeykong.jpg',
+            'price' => 95,
+            'slug' => Str::slug('Donkey Kong'),
+        ]);
 
-        // Product::factory()->create([
-        //     'category_id' => 3,
-        //     'name' => 'Product 5',
-        //     'description' => 'Product 5 description',
-        //     'image' => 'product5.jpg',
-        //     'price' => 500,
-        // ]);
+        Product::factory()->create([
+            'category_id' => 2,
+            'name' => 'Kirby\'s Adventure',
+            'description' => 'Fun platformer with Kirby, a character with unique abilities to inhale enemies.',
+            'image' => 'kirbyadventure.jpg',
+            'price' => 105,
+            'slug' => Str::slug('Kirby\'s Adventure'),
+        ]);
 
-        // Product::factory()->create([
-        //     'category_id' => 3,
-        //     'name' => 'Product 6',
-        //     'description' => 'Product 6 description',
-        //     'image' => 'product6.jpg',
-        //     'price' => 600,
-        // ]);
+        Product::factory()->create([
+            'category_id' => 2,
+            'name' => 'Mega Man 2',
+            'description' => 'Action platformer with challenging stages and robot masters.',
+            'image' => 'megaman2.jpg',
+            'price' => 115,
+            'slug' => Str::slug('Mega Man 2'),
+        ]);
+
+        Product::factory()->create([
+            'category_id' => 2,
+            'name' => 'Tetris',
+            'description' => 'Classic puzzle game that requires skill and quick thinking.',
+            'image' => 'tetris.jpg',
+            'price' => 80,
+            'slug' => Str::slug('Tetris'),
+        ]);
+
+        Product::factory()->create([
+            'category_id' => 2,
+            'name' => 'Contra',
+            'description' => 'Run and gun action game with intense levels and enemies.',
+            'image' => 'contra.jpg',
+            'price' => 90,
+            'slug' => Str::slug('Contra'),
+        ]);
+
+        Product::factory()->create([
+            'category_id' => 2,
+            'name' => 'Super Mario Bros 3',
+            'description' => 'One of the best Mario platformers with innovative gameplay and levels.',
+            'image' => 'mario3.jpg',
+            'price' => 120,
+            'slug' => Str::slug('Super Mario Bros 3'),
+        ]);
+
+        Product::factory()->create([
+            'category_id' => 2,
+            'name' => 'Super Mario Bros',
+            'description' => 'The classic Mario game that defined platformers for generations.',
+            'image' => 'mario.jpg',
+            'price' => 85,
+            'slug' => Str::slug('Super Mario Bros'),
+        ]);
+
+        Product::factory()->create([
+            'category_id' => 3,
+            'name' => 'R-Type 2',
+            'description' => 'Classic side-scrolling shooter with intense action and challenging gameplay.',
+            'image' => 'rtype2.jpg',
+            'price' => rand(90, 130),
+            'slug' => Str::slug('R-Type 2'),
+        ]);
+
+        Product::factory()->create([
+            'category_id' => 3,
+            'name' => 'Batman',
+            'description' => 'Action game based on the iconic DC Comics character, featuring Gotham City.',
+            'image' => 'batman.jpg',
+            'price' => rand(90, 130),
+            'slug' => Str::slug('Batman'),
+        ]);
+
+        Product::factory()->create([
+            'category_id' => 3,
+            'name' => 'Gradius',
+            'description' => 'Space shooter with innovative power-up system and memorable soundtrack.',
+            'image' => 'gradius.jpg',
+            'price' => rand(90, 130),
+            'slug' => Str::slug('Gradius'),
+        ]);
+
+        Product::factory()->create([
+            'category_id' => 3,
+            'name' => 'Ninja Spirit',
+            'description' => 'Action platformer with ninja combat and unique gameplay mechanics.',
+            'image' => 'ninjaspirit.jpg',
+            'price' => rand(90, 130),
+            'slug' => Str::slug('Ninja Spirit'),
+        ]);
+
+        Product::factory()->create([
+            'category_id' => 3,
+            'name' => 'Street Fighter II',
+            'description' => 'Famous fighting game that introduced special moves and combos.',
+            'image' => 'streetfighter2.jpg',
+            'price' => rand(90, 130),
+            'slug' => Str::slug('Street Fighter II'),
+        ]);
+
+        Product::factory()->create([
+            'category_id' => 3,
+            'name' => 'Splatterhouse',
+            'description' => 'Horror-themed beat \'em up with gruesome enemies and dark environments.',
+            'image' => 'splatterhouse.jpg',
+            'price' => rand(90, 130),
+            'slug' => Str::slug('Splatterhouse'),
+        ]);
+
+
+
+
     }
 }

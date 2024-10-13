@@ -15,6 +15,7 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         Category::factory()->create([
+            'id' => 1,
             'name' => 'Sega',
             'description' => 'Discover classic SEGA games! Relive iconic adventures and arcade action from the golden age of gaming!',
             'image' => 'sega.jpg',
@@ -22,6 +23,7 @@ class CategorySeeder extends Seeder
         ]);
 
         Category::factory()->create([
+            'id' => 2,
             'name' => 'Nintendo',
             'description' => "Explore classic 8-bit Nintendo games! Relive iconic adventures and retro fun from gaming's golden era!",
             'image' => 'nintendo.jpg',
@@ -29,6 +31,7 @@ class CategorySeeder extends Seeder
         ]);
 
         Category::factory()->create([
+            'id' => 3,
             'name' => 'TurboGrafx',
             'description' => 'Discover TurboGrafx classics! Relive epic 16-bit adventures and unique retro gaming thrills!',
             'image' => 'turbografx.jpg',
@@ -36,6 +39,7 @@ class CategorySeeder extends Seeder
         ]);
 
         Category::factory()->create([
+            'id' => 4,
             'name' => 'Playstation',
             'description' => 'Explore iconic PlayStation 1 games! Relive classic adventures and timeless 3D gaming moments!',
             'image' => 'playstation.jpg',

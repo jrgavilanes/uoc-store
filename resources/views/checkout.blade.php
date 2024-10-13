@@ -82,6 +82,18 @@
                         return;
                     }
 
+                    if (!this.user.guest_email.includes('@') || this.user.guest_address.length < 5) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Guest email must be a valid email and address must be at least 5 characters long!',
+                            background: '#333',
+                            color: '#fff',
+                            confirmButtonColor: '#1d72b8',
+                        });
+                        return;
+                    }
+
                     const payload = {
                         user: this.user,
                     }
@@ -109,6 +121,18 @@
                             icon: 'error',
                             title: 'Oops...',
                             text: 'All fields are required!',
+                            background: '#333',
+                            color: '#fff',
+                            confirmButtonColor: '#1d72b8',
+                        });
+                        return;
+                    }
+
+                    if (this.user.name.length < 3 || this.user.address.length < 5) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Name must be at least 3 characters long and address must be at least 5 characters long!',
                             background: '#333',
                             color: '#fff',
                             confirmButtonColor: '#1d72b8',
