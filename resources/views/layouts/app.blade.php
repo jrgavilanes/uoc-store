@@ -12,7 +12,7 @@
 </head>
 
 <body class="bg-slate-800">
-    <div class="h-screen flex flex-col justify-start items-center mt-4 w-full">
+    <div class="min-h-screen flex flex-col justify-start items-center mt-4 w-full">
 
         <nav class="flex flex-col sm:flex-row justify-between items-center sm:w-[800px]">
             <ul class="flex flex-col sm:flex-row gap-4 w-full">
@@ -40,14 +40,16 @@
             </ul>
         </nav>
 
-
-
         @yield('content')
 
         <div class="h-[1px] bg-white/5 sm:w-[800px]"></div>
-        <p class="text-white text-xs mt-2"><a href="{{ route('dashboard') }}">- admin -</a></p>
+        <p class="text-white text-xs mt-2">
+            <a href="{{ route('dashboard') }}">- admin -</a>
+        </p>
 
     </div>
+
+
 
 
 

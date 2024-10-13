@@ -187,14 +187,14 @@ class ProductSeeder extends Seeder
             'slug' => Str::slug('Super Mario Bros'),
         ]);
 
-        Product::factory()->create([
-            'category_id' => 3,
-            'name' => 'R-Type 2',
-            'description' => 'Classic side-scrolling shooter with intense action and challenging gameplay.',
-            'image' => 'rtype2.jpg',
-            'price' => rand(90, 130),
-            'slug' => Str::slug('R-Type 2'),
-        ]);
+        // Product::factory()->create([
+        //     'category_id' => 3,
+        //     'name' => 'R-Type 2',
+        //     'description' => 'Classic side-scrolling shooter with intense action and challenging gameplay.',
+        //     'image' => 'rtype2.jpg',
+        //     'price' => rand(90, 130),
+        //     'slug' => Str::slug('R-Type 2'),
+        // ]);
 
         Product::factory()->create([
             'category_id' => 3,
