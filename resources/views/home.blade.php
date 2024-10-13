@@ -5,7 +5,7 @@
 @section('content')
 
     <div class="banner bg-gradient-to-r from-purple-700 via-blue-800 to-black text-white py-20 px-8 text-center mt-4 w-full">
-        <h1 class="text-5xl md:text-6xl font-extrabold mb-4">RetroStore</h1>
+        <h1 class="text-5xl md:text-6xl font-extrabold mb-4">RetroStore 👾</h1>
         <p class="text-lg md:text-2xl mb-6">Relive the nostalgia of classic video games</p>
         <p class="text-sm md:text-lg mb-8">Find your favorite games from Nintendo, Sega, PlayStation, and more.</p>
         <a href="{{ route('categories', 'sega') }}"

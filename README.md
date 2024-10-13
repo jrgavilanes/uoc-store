@@ -63,3 +63,5 @@ sail artisan db:migrate --seed
 
 
 <!-- https://wowroms.com/es/roms/list/sega%2Bmaster%2Bsystem?sort=download -->
+
+<!-- https://es.piliapp.com/emoji/list/ -->
