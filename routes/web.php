@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Models\Category;
@@ -20,22 +21,14 @@ Route::get('/categories/{slug}', [HomeController::class, 'showCategory'])->name(
 // Products
 Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products');
 
+// Cart and Checkout
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
+Route::post('/checkout-set-guest', [CartController::class, 'setGuest'])->name('checkout-set-guest');
+Route::post('/checkout-login', [CartController::class, 'checkoutLogin'])->name('checkout-login');
+Route::post('/final-checkout', [CartController::class, 'finalCheckout'])->name('final-checkout');
+Route::get('/order-summary', [CartController::class, 'orderSummary'])->name('order-summary');
 
-Route::get('/cart', function () {
-    $categories = Category::all();
-
-    return view('cart', compact('categories'));
-})->name('cart');
-
-Route::get('/checkout', function () {
-    $categories = Category::all();
-    return view('checkout', compact('categories'));
-})->name('checkout');
-
-Route::get('/order-summary', function () {
-    $categories = Category::all();
-    return view('order-summary', compact('categories'));
-})->name('order-summary');
 
 Route::get('/login', function () {
     return view('login');
@@ -99,116 +92,7 @@ Route::post('/logout', function () {
 })->middleware('auth')->name('logout');
 
 
-Route::post('/checkout-set-guest', function (Request $request) {
-    $data = $request->validate([
-        'user' => 'required|array',
-    ]);
 
-    // Elimino datos de usuario registrado por si viniese en la peticion
-    $data['user']['type'] = "guest";
-    $data['user']['id'] = null;
-    $data['user']['name'] = "";
-    $data['user']['email'] = "";
-    $data['user']['address'] = "";
-
-    session()->put('user', $data['user']);
-
-    return response()->json(["status" => "ok"]);
-
-})->name('checkout-set-guest');
-
-Route::post('/checkout-login', function (Request $request) {
-
-    try {
-
-        $data = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-            'address' => 'required',
-            'name' => 'required'
-        ]);
-
-        $credentials = $request->only('email', 'password');
-
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-
-            session()->forget('user');
-                $data['user']['type'] = "registered";
-                $data['user']['id'] = $user->id;
-                $data['user']['name'] = $data['name'];
-                $data['user']['email'] = $data['email'];
-                $data['user']['address'] = $data['address'];
-                $data['user']['guest_address'] = "";
-                $data['user']['guest_email'] = "";
-            session()->put('user', $data['user']);
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'You are logged in',
-                'user_id' => $user->id
-            ]);
-
-        } else {
-
-            return response()->json([
-                'status' => 'error',
-                'message' => 'wrong email or password'
-            ], 401);
-
-        }
-    } catch (ValidationException $e) {
-        // Captura los errores de validación y los devuelve en JSON
-        return response()->json([
-            'status' => 'validation_error',
-            'errors' => $e->errors()
-        ], 422);
-    }
-})->name('checkout-login');
-
-
-
-Route::post('/final-checkout', function (Request $request) {
-
-    $data = $request->validate([
-        'cart' => 'required|array',
-    ]);
-
-    if (!session()->has('user')) {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'You must be logged in to place an order'
-        ], 401);
-    }
-
-    $order = null;
-    if (session()->get('user')['type'] === 'guest') {
-        $order = Order::create([
-            'user_id' => null,
-            'email' => session()->get('user')['guest_email'],
-            'address' => session()->get('user')['guest_address'],
-        ]);
-    } else {
-        $order = Order::create([
-            'user_id' => session()->get('user')['id'],
-            'email' => session()->get('user')['email'],
-            'address' => session()->get('user')['address'],
-        ]);
-    }
-
-    foreach ($data['cart'] as $item) {
-        $order->orderLines()->create([
-            'product_id' => $item['product_id'],
-            'quantity' => $item['quantity'],
-            'price' => Product::find($item['product_id'])->price ?? null,
-        ]);
-    }
-
-    return response()->json([
-        'status' => 'ok',
-        'order_id' => $order->id,
-    ], 201);
-})->name('final-checkout');
 
 
 
