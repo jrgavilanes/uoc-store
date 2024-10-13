@@ -9,6 +9,7 @@ class HomeController extends Controller
     public function index()
     {
         $categories = Category::all();
+
         return view('home', compact('categories'));
     }
 
@@ -17,6 +18,7 @@ class HomeController extends Controller
         $category = Category::where('slug', $slug)->firstOrFail();
         $products = $category->products;
         $categories = Category::all();
+
         return view('categories', compact('category', 'products', 'categories'));
     }
 }

@@ -11,6 +11,7 @@ class ProductController extends Controller
     {
         $product = Product::where('slug', $slug)->firstOrFail();
         $categories = Category::all();
+
         return view('products', compact('product', 'categories'));
     }
 }

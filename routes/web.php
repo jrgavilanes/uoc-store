@@ -3,15 +3,9 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
-use App\Models\Category;
-use App\Models\Order;
-use App\Models\OrderLine;
-use App\Models\Product;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Validation\ValidationException;
 
 
 // Home and Categories
@@ -34,47 +28,8 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
-
-
-
-
-Route::get('/dashboard', function () {
-
-    $user = Auth::user();
-
-    if (!$user->is_admin) {
-        return redirect()->route('home');
-    }
-
-    $orders = Order::select('id', 'user_id', 'created_at')
-        ->orderBy('id', 'desc')
-        ->paginate(10);
-
-    return view('dashboard', compact('orders'));
-
-})->middleware('auth')->name('dashboard');
-
-
-
-
-
-
-
-Route::get('/purchase-detail/{id}', function ($id) {
-    $user = Auth::user();
-
-    if (! $user->is_admin) {
-        return redirect()->route('home');
-    }
-
-    $purchase = Order::find($id);
-
-    $orderTotal = OrderLine::where('order_id', $id)
-                ->selectRaw('SUM(price * quantity) as total')
-                ->value('total');
-
-    $orderTaxes = $orderTotal / 1.21 * 0.21;
-    $orderTaxes = round($orderTaxes, 2);
-
-    return view('purchase-detail', compact('purchase', 'orderTotal', 'orderTaxes'));
-})->middleware('auth')->name('purchase-detail');
+// Orders (Admin)
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [OrderController::class, 'dashboard'])->name('dashboard');
+    Route::get('/purchase-detail/{id}', [OrderController::class, 'show'])->name('purchase-detail');
+});
