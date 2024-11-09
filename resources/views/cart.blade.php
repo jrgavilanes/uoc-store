@@ -123,6 +123,8 @@
                                 showConfirmButton: false,
                                 background: '#333',
                                 color: '#fff',
+                            }).then(() => {
+                                location.reload();
                             });
                         }
                     })
