@@ -19,7 +19,10 @@
             @foreach ($categories as $category)
                 <a href="{{ route('categories', $category->slug) }}">
                     <div
-                        class="shadow-xl p-4 flex justify-between items-center gap-4 border border-red-300/25 rounded-xl hover:scale-105 duration-300 hover:bg-slate-900 min-h-[150px] my-8 cursor-pointer">
+                        class="shadow-xl p-4 flex justify-between items-center gap-4 border border-red-300/25
+                                rounded-xl hover:scale-105 duration-300 hover:bg-slate-900 min-h-[150px]
+                                my-8 cursor-pointer"
+                    >
                         <div>
                             <img src="{{ $category->imageUrl }}" width="100" alt="">
                         </div>
