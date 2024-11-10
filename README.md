@@ -1,4 +1,4 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="./documentation/retrostore.png"  alt="Laravel Logo"></a></p>
+<p align="center"><img src="./documentation/retrostore.png"  alt="Laravel Logo"></p>
 
 Ver Documentación extendida en <a href="./documentation/Gavilanes_Sanchez_JuanRamon_CE_PRA1.pdf">Memoria del proyecto</a>
 
