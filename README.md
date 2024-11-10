@@ -1,67 +1,52 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="./documentation/retrostore.png"  alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Ver Documentación extendida en <a href="./documentation/Gavilanes_Sanchez_JuanRamon_CE_PRA1.pdf">Memoria del proyecto</a>
 
+## Instalación rápida
+Necesitas tener instalado Docker y Docker-compose en tu equipo
 
+Nos colocamos desde el raiz del proyecto
 
-## Crear nuevo proyecto Laravel con SAIL ( docker required )
+Instalar dependencias composer
 ```sh
-curl -s "https://laravel.build/my-app" | bash
+docker run --rm -v $(pwd):/app composer install
 ```
 
-## Levantar entorno
+Configura Entorno y conexión a base de datos en fichero ```.env```. 
+
+Si no lo tienes básate en .env.example ```cp .env.example .env```
+```
+...
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=uoc-store
+DB_USERNAME=sail
+DB_PASSWORD=password
+...
+```
+
+Inicia entorno con SAIL
 ```sh
-sail up
-sail composer install
-sail npm run dev
-sail migrate
+./vendor/bin/sail up
 ```
 
-## Instala dependencias
+Instala dependencias NPM
 ```sh
-sail composer require livewire/livewire
-sail composer require wireui/wireui
-sail composer require barryvdh/laravel-debugbar --dev
+./vendor/bin/sail npm install
 ```
 
-taildwind
+Inicia VITE para el frontend
 ```sh
-# ... revisa configuración app.css, etc en la web
-# https://tailwindcss.com/docs/guides/laravel
-sail npm install -D tailwindcss postcss autoprefixer
-sail npx tailwindcss init -p
-
+./vendor/bin/sail npm run dev
 ```
 
-
-## Desarrollo ( requiere docker instalado )
-
-La primera vez que descargas el proyecto, tienes que instalar dependencias laravel y node.
-
-```bash
-docker run --rm \
-    -v $(pwd):/var/www/html \
-    -w /var/www/html \
-    laravelsail/php82-composer:latest \
-    composer install --ignore-platform-reqs
+Ejecuta migraciones de bases de datos y crea datos de prueba.
+```sh
+./vendor/bin/sail artisan migrate --seed
 ```
 
-Ahora ya con las dependencias instaladas ejecutamos el entorno de desarrollo
+# Esquema de datos
 
-```bash
-sail sail up
-sail npm run dev
-sail artisan db:migrate --seed
-```
 
 ![Esquema DB](/documentation/uoc-store-schema.png)
-
-
-<!-- https://wowroms.com/es/roms/list/sega%2Bmaster%2Bsystem?sort=download -->
-
-<!-- https://es.piliapp.com/emoji/list/ -->
