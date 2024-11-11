@@ -9,7 +9,7 @@ Nos colocamos desde el raiz del proyecto
 
 Instalar dependencias composer
 ```sh
-docker run --rm -v $(pwd):/app composer install
+docker run --rm -v "$(pwd):/app" composer install
 ```
 
 Configura Entorno y conexión a base de datos en fichero ```.env```. 
